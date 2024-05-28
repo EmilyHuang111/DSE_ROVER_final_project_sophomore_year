@@ -194,13 +194,13 @@ while True:
    width = frame.shape[1]
    if mid_x < (width // 2 -10):
        print("turn left")
-	   left()
+
    elif mid_x > (width // 2 +10):
        print("RIGHT")
-	   right()
+
    else:
        print("forward")
-	   forward()
+
 
 
    if cv2.waitKey(15) & 0xFF == ord('q'):
