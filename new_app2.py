@@ -8,7 +8,6 @@ import cv2
 import numpy as np
 from flask import Response
 from threading import Thread
-import lines
 import detection
 
 # Attempt to import and initialize MotorKit only on supported platforms
