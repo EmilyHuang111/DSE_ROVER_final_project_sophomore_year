@@ -245,7 +245,7 @@ def showLines(frame, lines):
 def load_video_raw(currentState, userName, frame, stop_event):
     global webcam, webcam_lock
     currentState.config(text="Current State: Camera loaded")
-    #log_activity(f"{userName} clicked load camera button.")
+    log_activity(f"{userName} clicked load camera button.")
     video_label2 = tk.Label(frame)
     video_label2.grid(row=2, column=0, columnspan=2)
 
@@ -302,7 +302,7 @@ def detect_obstacle(frame,nframe):
 def load_video_processed(currentState, userName, frame, stop_event):
     global webcam, webcam_lock
     currentState.config(text="Current State: Overlay Loaded")
-    #log_activity(f"{userName} clicked load overlay button.")
+    log_activity(f"{userName} clicked load overlay button.")
     video_label1 = tk.Label(frame)
     video_label1.grid(row=2, column=0, columnspan=2)
     max_attempts = 5  # Maximum number of attempts to read from the webcam
@@ -337,16 +337,16 @@ def load_video_processed(currentState, userName, frame, stop_event):
                 new_threshold = 50  # Adjust this value as needed
                 hough = cv.HoughLinesP(segment, 2, np.pi / 180, new_threshold, np.array([]), minLineLength=100, maxLineGap=50)
 
-                #lines = generateLines(overlay, hough)  # Pass the overlay frame to generateLines
+                lines = generateLines(overlay, hough)  # Pass the overlay frame to generateLines
                 lines = generateLines(original_frame, hough)  # Pass the original frame to generateLines
                 if lines is not None:
-                    #processed_frame = showLines(overlay, lines)  # Draw lines on the overlay
+                    processed_frame = showLines(overlay, lines)  # Draw lines on the overlay
                     processed_frame = showLines(original_frame, lines)  # Draw lines on the origianl 
                 else:
-                    #processed_frame = overlay  # If no lines are detected, use the overlay frame
+                    processed_frame = overlay  # If no lines are detected, use the overlay frame
                     processed_frame = original_frame  # If no lines are detected, use the orginal frame                    
                 processed_frame = thing(processed_frame)
-                #processed_frame = detect_vertical_lines(original_frame,processed_frame)
+                processed_frame = detect_vertical_lines(original_frame,processed_frame)
                 processed_frame = detect_obstacle(original_frame,processed_frame)
 
                 rgb_frame = cv.cvtColor(processed_frame, cv.COLOR_BGR2RGB)
