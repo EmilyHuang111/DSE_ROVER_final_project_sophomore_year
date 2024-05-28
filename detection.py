@@ -282,7 +282,7 @@ def detect_vertical_lines(frame):
                     # Draw a rectangle around the detected vertical line
                     cv.rectangle(frame, (x1 - 10, y1 - 10), (x2 + 10, y2 + 10), (0, 255, 0), 2)
                     # Put a label "Obstacle" near the detected line
-                    cv.putText(frame, 'Obstacle', (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    cv.putText(frame, 'WE ARE NOT ALONE', (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
     return frame  # Return the frame with detected lines highlighted
 cascade_src = 'obstacle.xml'
 car_cascade = cv.CascadeClassifier(cascade_src)
