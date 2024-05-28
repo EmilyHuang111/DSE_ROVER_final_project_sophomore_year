@@ -9,6 +9,7 @@ import numpy as np
 from flask import Response
 from threading import Thread
 import lines
+import detection
 
 # Attempt to import and initialize MotorKit only on supported platforms
 try:
@@ -63,6 +64,7 @@ def get_db_connection():
     return conn
 
 camera = cv2.VideoCapture(0)
+thing(frame)
 
 def getCanny(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
@@ -277,26 +279,18 @@ def start():
         lane_following_thread = Thread(target=lane_following_task)
         lane_following_thread.start()
     return jsonify("start")
-
- #Move the robor right    
-@app.route('/right', methods = ['GET', 'POST'])
-def right():
-  #moves robot right
-  kit.motor1.throttle = 0.72 * 1
-  kit.motor2.throttle = (0.72 + 0.069) * 1
-  #runs both motors for 0.3 seconds
-  time.sleep(0.3)
-  return jsonify("right")
-
- #Move the robot forward
-@app.route('/forward', methods = ['GET', 'POST'])
-def forward():
-  #moves robot forward
-  kit.motor1.throttle = 0.775
-  kit.motor2.throttle = (0.775 - 0.15) * -1
-  #runs both motors for 0.3 seconds
-  time.sleep(0.3)
-  return jsonify("forward")
+    
+if mid_x > (width // 2 +10):
+       print("RIGHT")
+       #Move the robot right    
+       @app.route('/right', methods = ['GET', 'POST'])
+       def right():
+         #moves robot right
+         kit.motor1.throttle = 0.72 * 1
+         kit.motor2.throttle = (0.72 + 0.069) * 1
+         #runs both motors for 0.3 seconds
+         time.sleep(0.3)
+         return jsonify("right")
 
 @app.route('/backward', methods = ['GET', 'POST'])
 #Move the robot backward
@@ -307,17 +301,29 @@ def backward():
   #runs both motors for 0.3 seconds
   time.sleep(0.3)
   return jsonify("backward")
-
-@app.route('/left', methods = ['GET', 'POST'])
-#Move the robot left
-def left():
-  #moves robot left
-  kit.motor1.throttle = 0.72 * -1
-  kit.motor2.throttle = (0.72 + 0.069) * -1
-  #runs both motors for 0.3 seconds
-  time.sleep(0.3)
-  return jsonify("left")
-
+ elif mid_x < (width // 2 -10):
+       print("turn left")
+       @app.route('/left', methods = ['GET', 'POST'])
+       #Move the robot left
+       def left():
+       #moves robot left
+       kit.motor1.throttle = 0.72 * -1
+       kit.motor2.throttle = (0.72 + 0.069) * -1
+       #runs both motors for 0.3 seconds
+       time.sleep(0.3)
+       return jsonify("left")
+           
+else:
+    #Move the robot forward
+    @app.route('/forward', methods = ['GET', 'POST'])
+    def forward():
+      #moves robot forward
+      kit.motor1.throttle = 0.775
+      kit.motor2.throttle = (0.775 - 0.15) * -1
+      #runs both motors for 0.3 seconds
+      time.sleep(0.3)
+      return jsonify("forward")
+        
 #Stop the robot
 @app.route('/stop', methods=['GET', 'POST'])
 def stop():
