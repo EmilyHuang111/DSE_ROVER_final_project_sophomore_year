@@ -118,7 +118,7 @@ def thing(image):
         # add the unwarped image and the orginal image ontop of each other
         finished = cv.addWeighted(image, 0.5, unwarped, 0.5, 0.0)
 
-        return finished, maxx
+        return finished
 
 # Root Menu for user registration and login
 root = tk.Tk()
@@ -345,15 +345,15 @@ def load_video_processed(currentState, userName, frame, stop_event):
                 else:
                     #processed_frame = overlay  # If no lines are detected, use the overlay frame
                     processed_frame = original_frame  # If no lines are detected, use the orginal frame                    
-                processed_frame, mid_x = thing(processed_frame)
-                # Determine the direction based on the position of the midline
-                width = processed_frame.shape[1]
-                if mid_x < width // 2:
-                   cv.putText(processed_frame, "turn left", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-                elif mid_x == width // 2:
-                   cv.putText(processed_frame, "forwards", (10, 120), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-                else:
-                   cv.putText(processed_frame, "turn right", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                processed_frame = thing(processed_frame)
+                # # Determine the direction based on the position of the midline
+                # width = processed_frame.shape[1]
+                # if mid_x < width // 2:
+                #    cv.putText(processed_frame, "turn left", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                # elif mid_x == width // 2:
+                #    cv.putText(processed_frame, "forwards", (10, 120), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                # else:
+                #    cv.putText(processed_frame, "turn right", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 processed_frame = detect_vertical_lines(original_frame,processed_frame)
                 processed_frame = detect_obstacle(original_frame,processed_frame)
 
