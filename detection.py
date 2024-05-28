@@ -349,11 +349,11 @@ def load_video_processed(currentState, userName, frame, stop_event):
                 # Determine the direction based on the position of the midline
                 width = processed_frame.shape[1]
                 if mid_x < width // 2:
-                   cv2.putText(processed_frame, "turn left", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                   cv.putText(processed_frame, "turn left", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 elif mid_x == width // 2:
-                   cv2.putText(processed_frame, "forwards", (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                   cv.putText(processed_frame, "forwards", (10, 120), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 else:
-                   cv2.putText(processed_frame, "turn right", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                   cv.putText(processed_frame, "turn right", (10, 100), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 processed_frame = detect_vertical_lines(original_frame,processed_frame)
                 processed_frame = detect_obstacle(original_frame,processed_frame)
 
