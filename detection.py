@@ -265,33 +265,39 @@ def load_video_raw(currentState, userName, frame, stop_event):
                 root.after(0, update_label, Image.fromarray(rgb_frame), video_label2)
 
 
-def detect_vertical_lines(frame):
-    # Convert the frame to grayscale
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    # Detect edges using the Canny edge detector
-    edges = cv.Canny(gray, 50, 150, apertureSize=3)
-    # Detect lines using the probabilistic Hough line transform
-    lines = cv.HoughLinesP(edges, 1, np.pi/180, threshold=100, minLineLength=100, maxLineGap=10)
-    if lines is not None:  # Check if any lines are detected
-        for line in lines:  # Iterate through each detected line
-            for x1, y1, x2, y2 in line:  # Extract the coordinates of the line endpoints
-                # Calculate the angle of the line in degrees
-                angle = np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi
-                # Check if the line is approximately vertical (angle close to 90 or -90 degrees)
-                if abs(angle) > 80 and abs(angle) < 100:
-                    # Draw a rectangle around the detected vertical line
-                    cv.rectangle(frame, (x1 - 10, y1 - 10), (x2 + 10, y2 + 10), (0, 255, 0), 2)
-                    # Put a label "Obstacle" near the detected line
-                    cv.putText(frame, 'WE ARE NOT ALONE', (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-    return frame  # Return the frame with detected lines highlighted
+def detect_vertical_lines(frame,nframe):
+    try:
+        # Convert the frame to grayscale
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        # Detect edges using the Canny edge detector
+        edges = cv.Canny(gray, 50, 150, apertureSize=3)
+        # Detect lines using the probabilistic Hough line transform
+        lines = cv.HoughLinesP(edges, 1, np.pi/180, threshold=100, minLineLength=100, maxLineGap=10)
+        if lines is not None:  # Check if any lines are detected
+            for line in lines:  # Iterate through each detected line
+                for x1, y1, x2, y2 in line:  # Extract the coordinates of the line endpoints
+                    # Calculate the angle of the line in degrees
+                    angle = np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi
+                    # Check if the line is approximately vertical (angle close to 90 or -90 degrees)
+                    if abs(angle) > 80 and abs(angle) < 100:
+                        # Draw a rectangle around the detected vertical line
+                        cv.rectangle(nframe, (x1 - 10, y1 - 10), (x2 + 10, y2 + 10), (0, 255, 0), 2)
+                        # Put a label "Obstacle" near the detected line
+                        cv.putText(nframe, 'WE ARE NOT ALONE', (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        return nframe  # Return the frame with detected lines highlighted
+    except:
+        return nframe
 cascade_src = 'obstacle.xml'
 car_cascade = cv.CascadeClassifier(cascade_src)
-def detect_obstacle(frame):
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    obstacle = car_cascade.detectMultiScale(gray, 1.1, 1)
-    for (x, y, w, h) in obstacle:
-        cv.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-    return frame
+def detect_obstacle(frame,nframe):
+    try:
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        obstacle = car_cascade.detectMultiScale(gray, 1.1, 1)
+        for (x, y, w, h) in obstacle:
+            cv.rectangle(nframe, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        return nframe
+    except:
+        return nframe
 
 def load_video_processed(currentState, userName, frame, stop_event):
     global webcam, webcam_lock
@@ -348,8 +354,8 @@ def load_video_processed(currentState, userName, frame, stop_event):
                    cv2.putText(image, "forwards", (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                 else:
                    cv2.putText(image, "turn right", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-                processed_frame = detect_vertical_lines(processed_frame)
-                processed_frame = detect_obstacle(processed_frame)
+                processed_frame = detect_vertical_lines(original_frame,processed_frame)
+                processed_frame = detect_obstacle(original_frame,processed_frame)
 
                 rgb_frame = cv.cvtColor(processed_frame, cv.COLOR_BGR2RGB)
                 rgb_frame = cv.resize(rgb_frame, (256, 256))
