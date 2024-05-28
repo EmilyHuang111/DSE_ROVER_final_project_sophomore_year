@@ -346,7 +346,7 @@ def load_video_processed(currentState, userName, frame, stop_event):
                     #processed_frame = overlay  # If no lines are detected, use the overlay frame
                     processed_frame = original_frame  # If no lines are detected, use the orginal frame                    
                 processed_frame = thing(processed_frame)
-                processed_frame = detect_vertical_lines(original_frame,processed_frame)
+                #processed_frame = detect_vertical_lines(original_frame,processed_frame)
                 processed_frame = detect_obstacle(original_frame,processed_frame)
 
                 rgb_frame = cv.cvtColor(processed_frame, cv.COLOR_BGR2RGB)
