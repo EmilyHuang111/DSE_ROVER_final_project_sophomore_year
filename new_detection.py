@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 import pytz
 import threading
-
+from new_app import *
 
 def thing(image):
     def contours_2(image, og, extra_pix=0):
@@ -329,6 +329,21 @@ def load_video_processed(currentState, userName, frame, stop_event):
                         break 
                     continue  # Skip the rest of the loop and try again
             if ret:
+                mid_x = process_image(frame)  # Process the frame to find the midline
+
+                # Determine the direction based on the position of the midline
+                width = frame.shape[1]
+                if mid_x < (width // 2 - 10):
+                    print("turn left")
+                    left()
+
+                elif mid_x > (width // 2 + 10):
+                    print("RIGHT")
+                    right()
+                else:
+                    print("forward")
+                    forward()
+
                 canny = getCanny(original_frame)
                 segment, mask = getSegment(canny)
                 colored_mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)  # Convert to a 3 channel image
