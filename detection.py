@@ -112,7 +112,9 @@ def thing(image):
                 maxx = point[0]
         middle = np.array(middle, dtype=np.int32)
         cv.polylines(warped_image, [middle], False, (0, 255, 255), 15)
-
+        start = middle[0]
+        end = middle[-1]
+        print(type(start))
         unwarped = unwarped(warped_image, np.float32(mask_vertices), screen_verts)
 
         # add the unwarped image and the orginal image ontop of each other
