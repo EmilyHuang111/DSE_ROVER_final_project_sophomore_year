@@ -1,7 +1,6 @@
-![Demo Video](laneDetection.gif)
-<p>
-  <img src="4quadrantDisplay.gif" alt="Demo Video" width="250">
-</p>
+| Lane Detection GIF | Demo Video GIF |
+| ------------------ | -------------- |
+| ![Lane Detection](laneDetection.gif) | ![Demo Video](4quadrantDisplay.gif) |
 
 
 
