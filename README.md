@@ -1,4 +1,4 @@
-![Demo Video](ezgif.com-optimize.gif)
+![Demo Video](4quadrantDisplay.gif)
 
 
 # Robot Control and Detection System
