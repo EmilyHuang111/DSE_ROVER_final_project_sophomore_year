@@ -1,6 +1,6 @@
 ![Demo Video](laneDetection.gif)
-<p align="center">
-  <img src="4quadrantDisplay.gif" alt="Demo Video" width="300">
+<p>
+  <img src="4quadrantDisplay.gif" alt="Demo Video" width="250">
 </p>
 
 
