@@ -1,5 +1,8 @@
 ![Demo Video](laneDetection.gif)
-![Demo Video](4quadrantDisplay.gif)
+<p align="center">
+  <img src="4quadrantDisplay.gif" alt="Demo Video" width="300">
+</p>
+
 
 
 # Robot Control and Detection System
