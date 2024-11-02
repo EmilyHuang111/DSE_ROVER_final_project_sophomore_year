@@ -1,3 +1,6 @@
+![Demo Video](ezgif.com-optimize.gif)
+
+
 # Robot Control and Detection System
 
 This project provides a comprehensive system for robot control, lane detection, and obstacle detection. It includes a Flask server for controlling robot movement, a Tkinter GUI for user interaction, a database for user registration and login, and OpenCV-based video processing for real-time lane and obstacle detection.
